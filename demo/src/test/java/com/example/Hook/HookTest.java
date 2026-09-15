@@ -1,9 +1,13 @@
 package com.example.Hook;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.time.Duration;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 import com.example.pages.loginPage;
 import com.example.pages.registerPage;
@@ -17,7 +21,18 @@ public class HookTest {
     public static registerPage rp;
         @Before 
         public void setUp(){
-            driver = new ChromeDriver();
+            //driver = new ChromeDriver();
+            // lancement avec le Grid 
+            ///////////////////////////////////////////////////////////////////
+            URL gridUrl=null;
+            try {
+                 gridUrl = new URL("http://selenium-hub:4444/wd/hub");
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+            ChromeOptions co = new ChromeOptions();
+            driver = new RemoteWebDriver(gridUrl, co);
+            ///////////////////////////////////////////////////////////////////////////
             lp = new loginPage(driver);
             rp = new registerPage(driver);
 
